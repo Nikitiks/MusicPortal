@@ -8,7 +8,7 @@ networks:
 
 
 services:
-  music-portals:
+  music-portal:
     container_name: music-portal
     build:
       dockerfile: Dockerfile
@@ -18,7 +18,7 @@ services:
     networks:
       - myNetwork2
     depends_on:
-      mssqldb:
+      mssql_db:
         condition: service_healthy
       nginx_mp:
         condition: service_healthy
