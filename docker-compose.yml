@@ -42,6 +42,8 @@ services:
     container_name: mssql_db1
     env_file:
       - .env
+    volumes:
+      - mssqldata:/var/opt/mssql
     ports:
      - "1500:1433"
     networks:
