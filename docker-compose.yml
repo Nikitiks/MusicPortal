@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
       context: .
     ports:
-      - '2001:4000'
+      - '2001:8080'
     networks:
       - myNetwork2
     depends_on:
