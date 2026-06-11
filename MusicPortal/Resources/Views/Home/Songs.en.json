@@ -1,0 +1,21 @@
+{
+  "Title": "Songs",
+  "Filters": "Filters",
+  "Title": "Title",
+  "Artist": "Artist",
+  "Genre": "Genre",
+  "SearchByTitle": "Search by title",
+  "SearchByArtist": "Search by artist",
+  "AllGenres": "All genres",
+  "ApplyFilters": "Apply filters",
+  "Reset": "Reset",
+  "Songs": "Songs",
+  "UploadDate": "Upload date",
+  "User": "User",
+  "Actions": "Actions",
+  "Download": "Download",
+  "NoSongsInCategory": "No songs in this category yet.",
+  "Showing": "Showing",
+  "of": "of",
+  "songs": "songs"
+}

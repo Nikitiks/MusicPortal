@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4 class="text-center">@Localizer["Header"]</h4>
+            </div>
+            <div class="card-body text-center">
+                <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                <h5>@Localizer["Message"]</h5>
+                <p>@Localizer["ContactAdmin"]</p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">@Localizer["GoHome"]</a>
+            </div>
+        </div>
+    </div>
+</div>

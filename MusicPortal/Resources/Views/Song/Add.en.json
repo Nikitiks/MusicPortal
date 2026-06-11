@@ -1,0 +1,13 @@
+{
+  "Title": "Add Song",
+  "Header": "Add New Song",
+  "TitleLabel": "Song Title *",
+  "ArtistLabel": "Artist *",
+  "GenreLabel": "Genre *",
+  "SelectGenre": "-- Select Genre --",
+  "FileLabel": "Song File *",
+  "FileHelp": "Supported formats: MP3, WAV, OGG. Maximum size: 10MB",
+  "AddButton": "Add Song",
+  "ValidationMessage": "Please fill all required fields (*)",
+  "FileSizeMessage": "File is too large. Maximum size: 10MB"
+}

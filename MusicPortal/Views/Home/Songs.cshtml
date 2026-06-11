@@ -1,0 +1,162 @@
+﻿@model List<Song>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper MusicPortal.TagHelpers.*, MusicPortal
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>@Localizer["Filters"]</h5>
+            </div>
+            <div class="card-body">
+                <form method="get" asp-action="Songs">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="titleFilter" class="form-label">@Localizer["SongTitle"]</label>
+                                <input type="text" id="titleFilter" name="titleFilter" class="form-control"
+                                       value="@ViewBag.TitleFilter" placeholder="@Localizer["SearchByTitle"]" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="artistFilter" class="form-label">@Localizer["Artist"]</label>
+                                <input type="text" id="artistFilter" name="artistFilter" class="form-control"
+                                       value="@ViewBag.ArtistFilter" placeholder="@Localizer["SearchByArtist"]" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="genreFilter" class="form-label">@Localizer["Genre"]</label>
+                                <select id="genreFilter" name="genreFilter" class="form-control">
+                                    <option value="">@Localizer["AllGenres"]</option>
+                                    @if (ViewBag.Genres != null)
+                                    {
+                                        @foreach (var genre in ViewBag.Genres)
+                                        {
+                                            if (ViewBag.SelectedGenre == genre.Id)
+                                            {
+                                                <option value="@genre.Id" selected>@genre.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@genre.Id">@genre.Name</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary me-2">@Localizer["ApplyFilters"]</button>
+                                <a href="@Url.Action("Songs")" class="btn btn-secondary">@Localizer["Reset"]</a>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@Localizer["Songs"]</h2>
+
+        @if (Model.Any())
+        {
+            <div class="row">
+                @foreach (var song in Model)
+                {
+                    <div class="col-md-6 mb-4">
+                        <div class="card song-card h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h5 class="card-title mb-1">
+                                            <i class="fas fa-music text-primary me-1"></i>
+                                            <strong>@song.Title</strong>
+                                        </h5>
+                                        <p class="card-text text-muted mb-0">
+                                            <i class="fas fa-microphone text-secondary me-1"></i> 
+                                            @song.Artist
+                                        </p>
+                                    </div>
+                                    <span class="badge bg-primary genre-badge">
+                                        <i class="fas fa-tag me-1"></i>@song.Genre?.Name
+                                    </span>
+                                </div>
+
+                                <div class="song-meta mb-3">
+                                    <span class="badge bg-light text-dark me-2">
+                                        <i class="fas fa-user text-info me-1"></i> @song.User?.Username
+                                    </span>
+                                    <span class="badge bg-light text-dark">
+                                        <i class="fas fa-calendar-alt text-success me-1"></i> @song.UploadDate.ToString("dd.MM.yyyy")
+                                    </span>
+                                </div>
+
+                                <!-- Audio Player -->
+                                <div class="audio-player-container-inline mb-3" data-song-id="@song.Id">
+                                    <div class="player-controls-row">
+                                        <button class="btn btn-primary btn-play-inline" data-song-file="@song.FileName" title="@Localizer["Play"]">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <div class="player-progress-container">
+                                            <input type="range" class="form-range progress-bar-custom" min="0" max="100" value="0" step="0.1">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="current-time">0:00</span>
+                                                <span class="duration">0:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="volume-controls">
+                                            <button class="btn btn-sm btn-outline-secondary volume-icon" title="Гучність">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <input type="range" class="form-range volume-control" min="0" max="100" value="70" step="1">
+                                        </div>
+                                    </div>
+                                    <audio class="audio-element" preload="metadata"></audio>
+                                </div>
+
+                                <div class="d-grid">
+                                    <a href="@Url.Action("Download", "Home", new { id = song.Id })"
+                                       class="btn btn-success">
+                                        <i class="fas fa-download me-1"></i> @Localizer["Download"]
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-4">
+                <pagination pagination-model="@ViewBag.PaginationModel"
+                            sort-filter-model="@ViewBag.SortFilterModel"></pagination>
+            </div>
+
+            <div class="mt-2 text-muted">
+                @Localizer["Showing"].Value @((ViewBag.PaginationModel.PageNumber - 1) * ViewBag.PaginationModel.PageSize + 1)
+                - @Math.Min(ViewBag.PaginationModel.PageNumber * ViewBag.PaginationModel.PageSize, ViewBag.PaginationModel.TotalCount)
+                @Localizer["of"].Value @ViewBag.PaginationModel.TotalCount @Localizer["songs"].Value
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                @Localizer["NoSongsInCategory"].Value
+            </div>
+        }
+    </div>
+</div>

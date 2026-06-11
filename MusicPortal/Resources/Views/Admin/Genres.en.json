@@ -1,0 +1,13 @@
+{
+  "Title": "Genre Management",
+  "GenreManagement": "Genre Management",
+  "AddGenre": "Add Genre",
+  "GenreName": "Genre Name",
+  "Actions": "Actions",
+  "Delete": "Delete",
+  "DeleteGenreConfirm": "Are you sure you want to delete this genre?",
+  "NoGenres": "No genres found.",
+  "AddNewGenre": "Add New Genre",
+  "Cancel": "Cancel",
+  "Add": "Add"
+}

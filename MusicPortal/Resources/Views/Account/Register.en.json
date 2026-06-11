@@ -1,0 +1,11 @@
+{
+  "Title": "Registration",
+  "Header": "Registration",
+  "Username": "Username",
+  "Email": "Email",
+  "Password": "Password",
+  "ConfirmPassword": "Confirm Password",
+  "RegisterButton": "Register",
+  "HasAccount": "Already have an account?",
+  "LoginLink": "Login"
+}

@@ -1,0 +1,127 @@
+﻿@model List<Song>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Home"];
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>@Localizer["RecentSongs"]</h2>
+
+        @if (Model.Any())
+        {
+            <div class="row">
+                @foreach (var song in Model)
+                {
+                    <div class="col-md-12 mb-4">
+                        <div class="card song-card-home h-100">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h5 class="card-title mb-1">
+                                            <i class="fas fa-music text-primary"></i> @song.Title
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            <i class="fas fa-microphone"></i> @song.Artist
+                                        </h6>
+                                        <p class="card-text mb-2">
+                                            <span class="badge bg-primary genre-badge">
+                                                <i class="fas fa-tag"></i> @song.Genre?.Name
+                                            </span>
+                                            <span class="text-muted ms-2">
+                                                <i class="fas fa-calendar-alt"></i> @song.UploadDate.ToString("dd.MM.yyyy")
+                                            </span>
+                                            <span class="text-muted ms-2">
+                                                <i class="fas fa-user"></i> @song.User?.Username
+                                            </span>
+                                        </p>
+                                        
+                                        <!-- Audio Player Compact -->
+                                        <div class="audio-player-container-inline mb-2" data-song-id="@song.Id">
+                                            <div class="player-controls-compact">
+                                                <button class="btn btn-primary btn-play-inline btn-sm" data-song-file="@song.FileName" title="Відтворити">
+                                                    <i class="fas fa-play"></i>
+                                                </button>
+                                                <div class="player-info-compact">
+                                                    <input type="range" class="form-range progress-bar-custom" min="0" max="100" value="0" step="0.1">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span class="current-time text-muted small">0:00</span>
+                                                        <span class="duration text-muted small">0:00</span>
+                                                    </div>
+                                                </div>
+                                                <div class="volume-container-compact">
+                                                    <button class="btn btn-sm btn-outline-secondary volume-toggle" title="Гучність">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="volume-slider-wrapper">
+                                                        <input type="range" class="form-range volume-control" min="0" max="100" value="70" step="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <audio class="audio-element" preload="metadata"></audio>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <a href="@Url.Action("Download", "Home", new { id = song.Id })"
+                                           class="btn btn-success">
+                                            <i class="fas fa-download"></i> @Localizer["Download"]
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Songs", "Home")" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-list"></i> @Localizer["ViewAllSongs"]
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                @Localizer["NoSongs"]
+            </div>
+        }
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>@Localizer["Genres"]</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Genres != null)
+                {
+                    <div class="list-group">
+                        @foreach (var genre in ViewBag.Genres)
+                        {
+                            <a href="@Url.Action("Songs", "Home", new { genreId = genre.Id })"
+                               class="list-group-item list-group-item-action">
+                                @genre.Name
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (HttpContextAccessor.HttpContext?.Session.GetInt32("UserId") == null)
+        {
+            <div class="card mt-3">
+                <div class="card-body text-center">
+                    <h5>@Localizer["JoinUs"]</h5>
+                    <p>@Localizer["JoinDescription"]</p>
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-primary">@Localizer["Register"]</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

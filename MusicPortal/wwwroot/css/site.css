@@ -1,0 +1,33 @@
+/* Стилі для сортування */
+.sort-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+    .sort-link:hover {
+        color: #007bff;
+        text-decoration: underline;
+    }
+
+/* Стилі для пагінації */
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Стилі для таблиці */
+.table th {
+    background-color: #f8f9fa;
+    border-top: none;
+}
+
+/* Стилі для фільтрів */
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}

@@ -1,0 +1,18 @@
+{
+  "Title": "Song Management",
+  "SongManagement": "Song Management",
+  "AddSong": "Add Song",
+  "SongTitle": "Song Title",
+  "Artist": "Artist",
+  "Genre": "Genre",
+  "SelectGenre": "-- Select --",
+  "UserID": "User ID",
+  "File": "File",
+  "Title": "Title",
+  "User": "User",
+  "UploadDate": "Upload Date",
+  "Actions": "Actions",
+  "Delete": "Delete",
+  "DeleteSongConfirm": "Are you sure you want to delete this song?",
+  "NoSongs": "No songs found."
+}

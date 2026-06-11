@@ -1,0 +1,22 @@
+{
+  "Title": "Пісні",
+  "Filters": "Фільтри",
+  "SongTitle": "Назва",
+  "Artist": "Виконавець",
+  "Genre": "Жанр",
+  "SearchByTitle": "Пошук за назвою",
+  "SearchByArtist": "Пошук за виконавцем",
+  "AllGenres": "Всі жанри",
+  "ApplyFilters": "Застосувати фільтри",
+  "Reset": "Скинути",
+  "Songs": "Пісні",
+  "UploadDate": "Дата завантаження",
+  "User": "Користувач",
+  "Actions": "Дії",
+  "Download": "Завантажити",
+  "Play": "Відтворити",
+  "NoSongsInCategory": "Поки що немає пісень у цій категорії.",
+  "Showing": "Показано",
+  "of": "з",
+  "songs": "пісень"
+}

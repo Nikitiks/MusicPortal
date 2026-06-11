@@ -1,0 +1,9 @@
+{
+  "Title": "Login",
+  "Header": "Login",
+  "Username": "Username",
+  "Password": "Password",
+  "LoginLink": "Login",
+  "NoAccount": "No account?",
+  "RegisterLink": "Register"
+}

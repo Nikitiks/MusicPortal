@@ -1,0 +1,89 @@
+﻿@model List<User>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h2>@Localizer["UserManagement"]</h2>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>@Localizer["Username"]</th>
+                    <th>Email</th>
+                    <th>@Localizer["Status"]</th>
+                    <th>@Localizer["Administrator"]</th>
+                    <th>@Localizer["RegistrationDate"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Username</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @if (user.IsActive)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
+                            }
+                        </td>
+                        <td>
+                            @if (user.IsAdmin)
+                            {
+                                <span class="badge bg-primary">@Localizer["Yes"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@Localizer["No"]</span>
+                            }
+                        </td>
+                        <td>@user.CreatedAt.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (!user.IsActive)
+                            {
+                                <form method="post" asp-action="ActivateUser" class="d-inline">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">@Localizer["Activate"]</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-action="DeactivateUser" class="d-inline">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <button type="submit" class="btn btn-warning btn-sm">@Localizer["Deactivate"]</button>
+                                </form>
+                            }
+
+                            @if (!user.IsAdmin)
+                            {
+                                <form method="post" asp-action="DeleteUser" class="d-inline" onsubmit="return confirm('@Localizer["DeleteUserConfirm"]');">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">@Localizer["Delete"]</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        @Localizer["NoUsers"]
+    </div>
+}

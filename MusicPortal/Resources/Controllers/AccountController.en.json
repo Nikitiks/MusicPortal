@@ -1,0 +1,9 @@
+{
+    "AccountNotActive": "Account is not activated. Please contact administrator.",
+    "InvalidCredentials": "Invalid username or password",
+    "UsernameExists": "User with this username already exists",
+    "EmailExists": "User with this email already exists",
+    "RegistrationSuccess": "Registration successful! Please wait for administrator to activate your account.",
+    "NoAccount": "No account?",
+    "RegisterLink": "Register"
+}

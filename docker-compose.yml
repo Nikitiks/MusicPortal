@@ -1,0 +1,55 @@
+volumes:
+  mssqldata:
+
+  
+networks:
+  myNetwork2:
+    driver: bridge
+
+
+services:
+  music-portals:
+    container_name: music-portal
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - '2001:4000'
+    networks:
+      - myNetwork2
+    depends_on:
+      mssqldb:
+        condition: service_healthy
+      nginx_mp:
+        condition: service_healthy
+
+
+  nginx_mp:
+    image: nginx:alpine
+    container_name: nginx_mp
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      -  '8180:80'
+    env_file:
+      - .env
+    networks:
+      - myNetwork2
+      
+
+  mssql_db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_db1
+    env_file:
+      - .env
+    ports:
+     - "1500:1433"
+    networks:
+     - myNetwork2
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P MSSQLpassword123 -Q 'SELECT 1'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+

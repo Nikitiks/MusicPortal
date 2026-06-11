@@ -1,0 +1,124 @@
+﻿@model List<Song>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<h2>@Localizer["SongManagement"]</h2>
+
+<!-- Форма для додавання пісні адміністратором -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>@Localizer["AddSong"]</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="AddSongAdmin" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">@Localizer["SongTitle"]</label>
+                        <input type="text" id="title" name="title" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="artist" class="form-label">@Localizer["Artist"]</label>
+                        <input type="text" id="artist" name="artist" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="genreId" class="form-label">@Localizer["Genre"]</label>
+                        <select id="genreId" name="genreId" class="form-control" required>
+                            <option value="">@Localizer["SelectGenre"]</option>
+                            @if (ViewBag.Genres != null)
+                            {
+                                @foreach (var genre in ViewBag.Genres)
+                                {
+                                    <option value="@genre.Id">@genre.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="userId" class="form-label">@Localizer["UserID"]</label>
+                        <input type="number" id="userId" name="userId" class="form-control" required value="1" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">@Localizer["File"]</label>
+                        <input type="file" id="file" name="file" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">@Localizer["AddSong"]</button>
+        </form>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>@Localizer["Title"]</th>
+                    <th>@Localizer["Artist"]</th>
+                    <th>@Localizer["Genre"]</th>
+                    <th>@Localizer["User"]</th>
+                    <th>@Localizer["File"]</th>
+                    <th>@Localizer["UploadDate"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var song in Model)
+                {
+                    <tr>
+                        <td>@song.Id</td>
+                        <td>@song.Title</td>
+                        <td>@song.Artist</td>
+                        <td>@song.Genre?.Name</td>
+                        <td>@song.User?.Username</td>
+                        <td><small>@song.FileName</small></td>
+                        <td>@song.UploadDate.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            <form method="post" asp-action="DeleteSong" class="d-inline" onsubmit="return confirm('@Localizer["DeleteSongConfirm"]');">
+                                <input type="hidden" name="id" value="@song.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">@Localizer["Delete"]</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        @Localizer["NoSongs"]
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["ErrorMessage"]
+    </div>
+}

@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@Localizer["AdminPanel"]</h2>
+        <p>@Localizer["WelcomeMessage"]</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">@Localizer["Users"]</h5>
+                <p class="card-text">@Localizer["UsersDescription"]</p>
+                <a href="@Url.Action("Users", "Admin")" class="btn btn-light">@Localizer["GoTo"]</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">@Localizer["Genres"]</h5>
+                <p class="card-text">@Localizer["GenresDescription"]</p>
+                <a href="@Url.Action("Genres", "Admin")" class="btn btn-light">@Localizer["GoTo"]</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">@Localizer["Songs"]</h5>
+                <p class="card-text">@Localizer["SongsDescription"]</p>
+                <a href="@Url.Action("Songs", "Admin")" class="btn btn-light">@Localizer["GoTo"]</a>
+            </div>
+        </div>
+    </div>
+</div>

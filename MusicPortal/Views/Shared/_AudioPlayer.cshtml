@@ -1,0 +1,36 @@
+@model MusicPortal.Common.Entities.Song
+
+<div class="audio-player-container mb-3" data-song-id="@Model.Id">
+    <div class="card">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <button class="btn btn-primary btn-play" data-song-file="@Model.FileName">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+                <div class="col">
+                    <h6 class="mb-0">@Model.Title</h6>
+                    <small class="text-muted">@Model.Artist</small>
+                </div>
+                <div class="col-auto">
+                    <span class="current-time">0:00</span> / <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <input type="range" class="form-range progress-bar-custom" min="0" max="100" value="0" step="0.1">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-auto">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                <div class="col">
+                    <input type="range" class="form-range volume-control" min="0" max="100" value="70" step="1">
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio class="audio-element" preload="metadata"></audio>
+</div>

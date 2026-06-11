@@ -1,0 +1,14 @@
+{
+  "SiteTitle": "Music Portal",
+  "Home": "Home",
+  "Songs": "Songs",
+  "AddSong": "Add Song",
+  "AdminPanel": "Admin Panel",
+  "Users": "Users",
+  "Genres": "Genres",
+  "WelcomeMessage": "Welcome to the system!",
+  "Logout": "Logout",
+  "Login": "Login",
+  "Register": "Register",
+  "Copyright": "© 2025 - Music Portal"
+}

@@ -1,0 +1,11 @@
+{
+  "Title": "Реєстрація",
+  "Header": "Реєстрація",
+  "Username": "Ім'я користувача",
+  "Email": "Email",
+  "Password": "Пароль",
+  "ConfirmPassword": "Підтвердження паролю",
+  "RegisterButton": "Зареєструватись",
+  "HasAccount": "Вже маєте акаунт?",
+  "LoginLink": "Увійти"
+}

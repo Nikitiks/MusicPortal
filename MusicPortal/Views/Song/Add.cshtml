@@ -1,0 +1,98 @@
+﻿@model Song
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">@Localizer["Header"]</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Add" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">@Localizer["TitleLabel"]</label>
+                        <input type="text" id="title" name="title" class="form-control" required />
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="artist" class="form-label">@Localizer["ArtistLabel"]</label>
+                        <input type="text" id="artist" name="artist" class="form-control" required />
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genreId" class="form-label">@Localizer["GenreLabel"]</label>
+                        <select id="genreId" name="genreId" class="form-control" required>
+                            <option value="">@Localizer["SelectGenre"]</option>
+                            @if (ViewBag.Genres != null)
+                            {
+                                @foreach (var genre in ViewBag.Genres)
+                                {
+                                    <option value="@genre.Id">@genre.Name</option>
+                                }
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="file" class="form-label">@Localizer["FileLabel"]</label>
+                        <input type="file" id="file" name="file" class="form-control" accept=".mp3,.wav,.ogg" required />
+                        <small class="form-text text-muted">@Localizer["FileHelp"]</small>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">@Localizer["AddButton"]</button>
+                    </div>
+                </form>
+
+                @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+                {
+                    <div class="alert alert-success mt-3">
+                        @ViewBag.SuccessMessage
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger mt-3">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const title = document.getElementById('title').value;
+            const artist = document.getElementById('artist').value;
+            const genreId = document.getElementById('genreId').value;
+            const file = document.getElementById('file').files[0];
+
+            if (!title || !artist || !genreId || !file) {
+                e.preventDefault();
+                alert('@Localizer["ValidationMessage"]');
+                return false;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                e.preventDefault();
+                alert('@Localizer["FileSizeMessage"]');
+                return false;
+            }
+
+            return true;
+        });
+    </script>
+}
